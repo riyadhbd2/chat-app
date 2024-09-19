@@ -1,36 +1,57 @@
 import React, { useState } from "react";
 import assets from "../../src/assets/assets";
+import { signUp, login } from "../config/firebase";
+
 
 const Login = () => {
   const [currState, setCurrState] = useState("Sign Up");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const onSubmitHandler = (e)=>{
+    e.preventDefault();
+    if (currState === "Sign Up") {
+      signUp(userName, email, password);
+      
+    }
+    else{
+      login(email, password)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[url(background.png)] bg-cover bg-center bg-no-repeat flex justify-center items-center gap-6">
       <img className="w-[max(20vw,200px)]" src={assets.logo_big} alt="" />
-      <form className="bg-white px-5 py-5 flex flex-col gap-5 rounded-lg">
+      <form onSubmit={onSubmitHandler} className="bg-white px-5 py-5 flex flex-col gap-5 rounded-lg">
         <h2 className="font-medium">{currState}</h2>
         {currState === "Sign Up" ? (
           <input
+            onChange={(e) => setUserName(e.target.value)}
             className="pl-2 pr-2 border border-neutral-300 rounded-md"
             type="text"
-            name=""
-            id=""
+            name="name"
+            id="name"
             placeholder="username"
             required
           />
         ) : null}
         <input
+          onChange={(e) => setEmail(e.target.value)}
           className="pl-2 pr-2 border border-neutral-300 rounded-md"
           type="email"
-          name=""
-          id=""
+          name="email"
+          id="email"
           placeholder="email address"
           required
         />
         <input
+          onChange={(e) => setPassword(e.target.value)}
           className="pl-2 pr-2 border border-neutral-300 rounded-md"
           type="password"
-          name=""
-          id=""
+          name="password"
+          id="password"
           placeholder="password"
           required
         />
